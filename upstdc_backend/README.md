@@ -17,7 +17,7 @@ This is the Spring Boot backend for the Uttar Pradesh Tourism Project Monitoring
 
 ## Environment variables
 
-No database environment variables are required.
+No database environment variables are required (no PG_ or JDBC_ values needed).
 - `JAVA_OPTS` (optional JVM flags)
 - `PORT` is not required; server port is fixed to 3001.
 
