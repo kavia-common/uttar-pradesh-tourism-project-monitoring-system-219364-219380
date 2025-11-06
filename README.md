@@ -5,7 +5,7 @@ This project runs with two containers only:
 - upstdc_frontend (Angular frontend)
 
 Database removed (intentional):
-- The previous upstdc_database container and all DB-related services, ports, and readiness dependencies have been removed.
+- The previous upstdc_database container and all DB-related services, ports, and readiness dependencies have been fully removed from this repository.
 - The backend runs in stub/no-DB mode by default with in-memory data (no persistence).
 - There is no PostgreSQL service, no DB visualizer, and no DB ports (e.g., 5000/3020) used anywhere in this repository.
 
