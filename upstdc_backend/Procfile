@@ -1,1 +1,1 @@
-web: mvn -q -DskipTests=true spring-boot:run
+web: bash start.sh
