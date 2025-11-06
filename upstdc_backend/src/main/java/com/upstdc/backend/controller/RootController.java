@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * PUBLIC_INTERFACE
  * RootController provides minimal liveness endpoints to verify that the application is running.
+ * This backend runs in stub/no-db mode by default to support frontend integration without a database.
  */
 @RestController
 public class RootController {

@@ -7,8 +7,8 @@ This is the Spring Boot backend for the Uttar Pradesh Tourism Project Monitoring
 - The preview system detects a start command via `Procfile`:
   - `web: bash start.sh`
 - `start.sh`:
-  - Waits for the PostgreSQL database (upstdc_database) to be ready using `pg_isready` (or TCP fallback).
-  - Builds if needed and starts the Spring Boot app using Maven wrapper if available.
+  - Starts the Spring Boot app using Maven wrapper if available (no DB wait).
+  - Builds if needed.
   - Applies `JAVA_OPTS` if provided.
 
 ## Ports
@@ -17,24 +17,14 @@ This is the Spring Boot backend for the Uttar Pradesh Tourism Project Monitoring
 
 ## Environment variables
 
-The backend reads database configuration from environment variables:
-- `DB_HOST` (default: `upstdc_database`)
-- `DB_PORT` (default: `5000`)
-- `DB_NAME` (default: `upstdc`)
-- `DB_USER` (default: `upstdc`)
-- `DB_PASSWORD` (default: `upstdc`)
+No database environment variables are required.
 - `JAVA_OPTS` (optional JVM flags)
 - `PORT` is not required; server port is fixed to 3001.
 
-Example:
-```bash
-export DB_HOST=upstdc_database
-export DB_PORT=5000
-export DB_NAME=upstdc
-export DB_USER=upstdc
-export DB_PASSWORD=secret
-bash start.sh
-```
+## Profiles
+
+- Default: stub/no-db mode (datasource and JPA autoconfiguration disabled).
+- Optional: H2 memory mode (`--spring.profiles.active=h2`) if needed for future development; H2 config is commented in application.properties.
 
 ## Local development
 
@@ -55,9 +45,16 @@ bash start.sh
 - `GET /healthz` — simple OK text
 - `GET /actuator/health` — health status (includes probes)
 - `GET /actuator/info` — app info
-- `GET /actuator/readiness` and `/actuator/liveness` — readiness/liveness probes (enabled via actuator probes)
+- `GET /actuator/readiness` and `/actuator/liveness` — readiness/liveness probes
+- Stub API endpoints:
+  - `POST /api/auth/login` — returns a static token and user info
+  - `GET /api/auth/me` — returns stub user info
+  - `GET /api/projects` — returns in-memory list of projects
+  - `GET /api/projects/{id}` — returns project by id
+  - `GET /api/tenders` — returns in-memory list of tenders
+  - `GET /api/tenders/{id}` — returns tender by id
 
 ## Notes
 
-- The `application.properties` sets server port to `3001` and reads DB settings from environment variables.
+- The `application.properties` sets server port to `3001` and disables datasource/JPA autoconfiguration by default.
 - The Maven `spring-boot-maven-plugin` is configured with `repackage` to create an executable jar for production use.
