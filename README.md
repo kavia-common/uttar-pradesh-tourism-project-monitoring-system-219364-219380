@@ -5,7 +5,7 @@ This project now runs with two containers:
 - upstdc_frontend (Angular frontend)
 
 Database container removed:
-- The previous upstdc_database (PostgreSQL) container and dependency checks have been removed.
+- The previous upstdc_database (PostgreSQL) container and dependency checks have been removed from the repo and orchestration.
 - The backend runs without a real database by default using an in-memory stub profile (no persistence).
 
 Backend start:
@@ -23,6 +23,10 @@ Frontend configuration:
 Environment variables for backend:
 - `JAVA_OPTS` (optional JVM flags)
 - `PORT` is not required; server port is fixed to 3001.
+
+Orchestration notes:
+- Only two containers are expected (frontend + backend). There is no database container in this repository and no services depend on it.
+- The frontend may run even if the backend is down; it should target http://localhost:3001 for API calls in local dev.
 
 Notes:
 - Stub endpoints provide basic mocked data for auth, projects, and tenders to enable frontend development.
